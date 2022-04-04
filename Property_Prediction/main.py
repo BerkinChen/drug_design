@@ -3,7 +3,8 @@ import torch
 from torchdrug import data, datasets
 import random,time
 
-dataset = datasets.ClinTox("~/molecule-datasets/",verbose=0)
+
+dataset = datasets.ClinTox("../data/molecule-datasets/",verbose=1)
 lengths = [int(0.8 * len(dataset)), int(0.1 * len(dataset))]
 lengths += [len(dataset) - sum(lengths)]
 train_set, valid_set, test_set = torch.utils.data.random_split(
@@ -33,18 +34,17 @@ optimizer = torch.optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, train_set, valid_set,
                      test_set, optimizer, gpus=[0], batch_size=1024)
 #solver.train(num_epoch=500)
-#solver.save('../checkpoint/checkpoint_test.pnt')
-solver.load('../checkpoint/checkpoint_test.pnt')
+#solver.save('../checkpoint/checkpoint_pp.pnt')
+solver.load('../checkpoint/checkpoint_pp.pnt')
 solver.evaluate("valid")
 
 
 samples = []
 categories = set()
-for sample in test_set:
+for sample in test_set[:16]:
     category = tuple([v for k, v in sample.items() if k != "graph"])
-    if category not in categories:
-        categories.add(category)
-        samples.append(sample)
+    categories.add(category)
+    samples.append(sample)
 samples = data.graph_collate(samples)
 samples = utils.cuda(samples)
 
@@ -57,5 +57,4 @@ for pred, target in zip(preds, targets):
     target = ", ".join(["%d" % t for t in target])
     titles.append("predict: %s\ntarget: %s" % (pred, target))
 graph = samples["graph"]
-graph.visualize(titles, figure_size=(3, 3.5),
-                num_row=1, save_file='result.png')
+graph.visualize(titles, num_row=4, save_file='result.png')
