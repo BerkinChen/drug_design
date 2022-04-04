@@ -34,8 +34,8 @@ optimizer = torch.optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, train_set, valid_set,
                      test_set, optimizer, gpus=[0], batch_size=1024)
 #solver.train(num_epoch=500)
-#solver.save('../checkpoint/checkpoint_pp.pnt')
-solver.load('../checkpoint/checkpoint_pp.pnt')
+#solver.save('../checkpoint/clintox_gin_property_prediction.pnt')
+solver.load('../checkpoint/clintox_gin_property_prediction.pnt')
 solver.evaluate("valid")
 
 
