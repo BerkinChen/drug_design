@@ -64,4 +64,4 @@ top1_index = num_prediction.cumsum(0) - num_prediction
 for i in range(len(products)):
     reactant = predictions[top1_index[i]].connected_components()[0]
     product = products[i].connected_components()[0]
-    plot.reaction(reactant, product,save_file='result'+str(i)+',png')
+    plot.reaction(reactant, product,save_file='result'+str(i)+'.png')
