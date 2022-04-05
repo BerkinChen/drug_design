@@ -1,4 +1,5 @@
 from collections import defaultdict
+from logging import exception
 from torchdrug.layers import distribution
 from torch import nn, optim
 from torchdrug import core, models, tasks
@@ -33,9 +34,11 @@ optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, dataset, None, None, optimizer,
                      gpus=(0,), batch_size=128, log_interval=10)
 
-solver.train(num_epoch=10)
-solver.save("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
+try:
+    solver.load("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
+except:
+    solver.train(num_epoch=10)
+    solver.save("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 
-#solver.load("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 results = task.generate(num_sample=16)
 results.visualize(num_row=4,save_file='result.png')
