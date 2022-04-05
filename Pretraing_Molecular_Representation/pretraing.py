@@ -18,4 +18,4 @@ solver = core.Engine(task, dataset, None, None,
                      optimizer, gpus=[0], batch_size=256)
 
 solver.train(num_epoch=100)
-solver.save("../checkpoint/clintox_gin_attributemasking.pth")
+solver.save("../checkpoint/clintox_gin_attributemasking.pnt")

@@ -21,7 +21,7 @@ optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, train_set, valid_set, test_set, optimizer,
                      gpus=[0], batch_size=256)
 
-checkpoint = torch.load("../checkpoint/clintox_gin_attributemasking.pth")["model"]
+checkpoint = torch.load("../checkpoint/clintox_gin_attributemasking.pnt")["model"]
 task.load_state_dict(checkpoint, strict=False)
 
 solver.train(num_epoch=100)
