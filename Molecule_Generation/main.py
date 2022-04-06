@@ -10,7 +10,6 @@ from torchdrug import datasets
 dataset = datasets.ZINC250k("../data/molecule-datasets/", kekulize=True,
                             node_feature="symbol")
 
-
 model = models.RGCN(input_dim=dataset.num_atom_type,
                     num_relation=dataset.num_bond_type,
                     hidden_dims=[256, 256, 256], batch_norm=True)
@@ -40,5 +39,9 @@ except:
     solver.train(num_epoch=10)
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 
-results = task.generate(num_sample=16)
-results.visualize(num_row=4,save_file='result.png')
+results = task.generate(num_sample=30000)
+with open('result.txt','w') as f:
+    for m in results.to_smiles():
+        f.write(m)
+        f.write('\n')
+#results.visualize(num_row=4,save_file='result.png')
