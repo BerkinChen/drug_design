@@ -1,3 +1,3 @@
 *.pnt
-nohup*.out
+*.out
 data
