@@ -36,10 +36,10 @@ solver = core.Engine(task, dataset, None, None, optimizer,
 try:
     solver.load("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 except:
-    solver.train(num_epoch=10)
+    solver.train(num_epoch=20)
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 
-results = task.generate(num_sample=30000)
+results = task.generate(num_sample=300000)
 with open('result.txt','w') as f:
     for m in results.to_smiles():
         f.write(m)

@@ -31,7 +31,7 @@ task = tasks.AutoregressiveGeneration(node_flow, edge_flow,
 
 optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, dataset, None, None, optimizer,
-                     gpus=(0,), batch_size=128, log_interval=10)
+                     gpus=(3,), batch_size=128, log_interval=10)
 
 try:
     solver.load("../checkpoint/zinc2m_graphaf_molecule_generation.pnt")
@@ -40,7 +40,7 @@ except:
     solver.save("../checkpoint/zinc2m_graphaf_molecule_generation.pnt")
 
 results = task.generate(num_sample=300000)
-with open('result.txt', 'w') as f:
+with open('result_2m.txt', 'w') as f:
     for m in results.to_smiles():
         f.write(m)
         f.write('\n')
