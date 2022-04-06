@@ -3,6 +3,7 @@ from torchdrug import core, models, tasks
 import torch
 from torchdrug.utils import plot
 from torchdrug import data, datasets, utils
+import os
 
 synthon_dataset = datasets.USPTO50k("../data/molecule-datasets/", as_synthon=True,
                                     node_feature="synthon_completion",
@@ -25,9 +26,11 @@ synthon_optimizer = torch.optim.Adam(synthon_task.parameters(), lr=1e-3)
 synthon_solver = core.Engine(synthon_task, synthon_train, synthon_valid,
                              synthon_test, synthon_optimizer,
                              gpus=[1], batch_size=128)
-synthon_solver.train(num_epoch=10)
-synthon_solver.evaluate("valid")
-synthon_solver.save("../checkpoint/uspto50k_g2gs_syntho.pnt")
+
+if os.path.exists("../checkpoint/uspto50k_g2gs_syntho.pnt"):
+    synthon_solver.train(num_epoch=10)
+    synthon_solver.evaluate("valid")
+    synthon_solver.save("../checkpoint/uspto50k_g2gs_syntho.pnt")
 
 batch = []
 reaction_set = set()
