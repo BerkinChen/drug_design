@@ -5,6 +5,7 @@ from torch import nn, optim
 from torchdrug import core, models, tasks
 import torch
 from torchdrug import datasets
+import os
 
 
 dataset = datasets.ZINC250k("../data/molecule-datasets/", kekulize=True,
@@ -33,13 +34,13 @@ optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, dataset, None, None, optimizer,
                      gpus=(0,), batch_size=128, log_interval=10)
 
-try:
+if os.path.exists("../checkpoint/zinc250k_graphaf_molecule_generation.pnt"):
     solver.load("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
-except:
+else:
     solver.train(num_epoch=20)
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation.pnt")
 
-results = task.generate(num_sample=300000)
+results = task.generate(num_sample=30000)
 with open('result.txt','w') as f:
     for m in results.to_smiles():
         f.write(m)

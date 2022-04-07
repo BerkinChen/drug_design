@@ -1,10 +1,12 @@
 from collections import defaultdict
+import imp
 from logging import exception
 from torchdrug.layers import distribution
 from torch import nn, optim
 from torchdrug import core, models, tasks
 import torch
 from torchdrug import datasets
+import os
 
 
 dataset = datasets.ZINC2m("../data/molecule-datasets/", kekulize=True,
@@ -31,11 +33,11 @@ task = tasks.AutoregressiveGeneration(node_flow, edge_flow,
 
 optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, dataset, None, None, optimizer,
-                     gpus=(3,), batch_size=128, log_interval=10)
+            gpus=(0,), batch_size=128, log_interval=10)
 
-try:
+if os.path.exists("../checkpoint/zinc2m_graphaf_molecule_generation.pnt"):
     solver.load("../checkpoint/zinc2m_graphaf_molecule_generation.pnt")
-except:
+else:
     solver.train(num_epoch=10)
     solver.save("../checkpoint/zinc2m_graphaf_molecule_generation.pnt")
 
