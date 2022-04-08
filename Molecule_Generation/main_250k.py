@@ -40,7 +40,7 @@ else:
     solver.train(num_epoch=10)
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation_new.pnt")
 
-results = task.generate(num_sample=300000)
+results = task.generate(num_sample=30000)
 with open('result_new.txt','w') as f:
     for m in results.to_smiles():
         f.write(m)
