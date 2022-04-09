@@ -32,7 +32,7 @@ task = tasks.AutoregressiveGeneration(node_flow, edge_flow,
 
 optimizer = optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, dataset, None, None, optimizer,
-                     gpus=(1,), batch_size=32, log_interval=10)
+                     gpus=(0,), batch_size=32, log_interval=10)
 
 if os.path.exists("../checkpoint/zinc250k_graphaf_molecule_generation_new.pnt"):
     solver.load("../checkpoint/zinc250k_graphaf_molecule_generation_new.pnt")
@@ -41,8 +41,8 @@ else:
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation_new.pnt")
 
 results = task.generate(num_sample=100000)
-with open('result_10k.txt','w') as f:
+with open('result_10k.txt', 'w') as f:
     for m in results.to_smiles():
         f.write(m)
         f.write('\n')
-#results.visualize(num_row=4,save_file='result.png')
+# results.visualize(num_row=4,save_file='result.png')
