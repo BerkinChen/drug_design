@@ -45,6 +45,5 @@ else:
 
 results = task.generate(num_sample=30000)
 with open('result_30k_qed.txt', 'w') as f:
-    for m in results.to_smiles():
-        f.write(m)
-        f.write('\n')
+    for m in results:
+        f.write(str(m)+'\n')
