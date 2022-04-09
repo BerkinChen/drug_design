@@ -44,7 +44,7 @@ else:
     solver.save("../checkpoint/zinc250k_graphaf_molecule_generation_qed.pnt")
 
 results = task.generate(num_sample=30000)
-with open('result_10k_qed.txt', 'w') as f:
+with open('result_30k_qed.txt', 'w') as f:
     for m in results.to_smiles():
         f.write(m)
         f.write('\n')
