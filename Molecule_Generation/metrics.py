@@ -2,8 +2,8 @@ import moses
 import argparse
 
 parser =  argparse.ArgumentParser()
-parser.add_argument('-i','--inuput_file',dest='input_path',help='Please give the input file path')
-parser.add_argument('-o','--output_file',dest='output_path',help='Please give the output file path')
+parser.add_argument('-i','--inuput_file',dest='input_path',help='The input file path')
+parser.add_argument('-o','--output_file',dest='output_path',help='The output file path')
 args = parser.parse_args()
 
 
