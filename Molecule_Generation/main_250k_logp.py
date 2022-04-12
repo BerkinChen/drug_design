@@ -45,5 +45,5 @@ else:
 
 results = task.generate(num_sample=30000)
 with open('result_30k_logP.txt', 'w') as f:
-    for m in results:
+    for m in results.to_smiles():
         f.write(str(m)+'\n')
