@@ -44,8 +44,11 @@ reaction_valid_small = torch_data.random_split(reaction_valid, lengths)[0]
 
 optimizer = torch.optim.Adam(task.parameters(), lr=1e-3)
 solver = core.Engine(task, reaction_train, reaction_valid_small, reaction_test,
-                     optimizer, gpus=[0], batch_size=32)
+                     optimizer, gpus=[1], batch_size=32)
 
+solver.load("./checkpoint/uspto50k_g2gs_reactionl.pnt", load_optimizer=False)
+solver.load("./checkpoint/uspto50k_g2gs_syntho.pnt", load_optimizer=False)
+solver.evaluate("valid")
 
 batch = []
 reaction_set = set()
